@@ -212,6 +212,23 @@ module.exports = [
     "clobbers": [
       "window.FileTransfer"
     ]
+  },
+  {
+    "id": "cordova-plugin-gallery-refresh.GalleryRefresh",
+    "file": "plugins/cordova-plugin-gallery-refresh/www/GalleryRefresh.js",
+    "pluginId": "cordova-plugin-gallery-refresh",
+    "clobbers": [
+      "galleryRefresh"
+    ]
+  },
+  {
+    "id": "cordova-plugin-inappbrowser.inappbrowser",
+    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+    "pluginId": "cordova-plugin-inappbrowser",
+    "clobbers": [
+      "cordova.InAppBrowser.open",
+      "window.open"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -221,6 +238,8 @@ module.exports.metadata =
   "cordova-plugin-dialogs": "2.0.1",
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-file-transfer": "1.7.1",
+  "cordova-plugin-gallery-refresh": "1.0.55",
+  "cordova-plugin-inappbrowser": "3.0.0",
   "cordova-plugin-whitelist": "1.3.3"
 };
 // BOTTOM OF METADATA

@@ -19,6 +19,12 @@
     "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.example.hello"
     },
+    "cordova-plugin-gallery-refresh": {
+      "PACKAGE_NAME": "com.example.hello"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.example.hello"
+    },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.example.hello"
     }

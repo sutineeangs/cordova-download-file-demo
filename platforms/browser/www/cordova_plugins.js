@@ -232,6 +232,29 @@ module.exports = [
         "merges": [
             "navigator.notification"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "clobbers": [
+            "cordova.InAppBrowser.open",
+            "window.open"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-inappbrowser/src/browser/InAppBrowserProxy.js",
+        "id": "cordova-plugin-inappbrowser.InAppBrowserProxy",
+        "pluginId": "cordova-plugin-inappbrowser",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-gallery-refresh/www/GalleryRefresh.js",
+        "id": "cordova-plugin-gallery-refresh.GalleryRefresh",
+        "pluginId": "cordova-plugin-gallery-refresh",
+        "clobbers": [
+            "galleryRefresh"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -241,7 +264,9 @@ module.exports.metadata =
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-file-transfer": "1.7.1",
     "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-dialogs": "2.0.1"
+    "cordova-plugin-dialogs": "2.0.1",
+    "cordova-plugin-inappbrowser": "3.0.0",
+    "cordova-plugin-gallery-refresh": "1.0.55"
 }
 // BOTTOM OF METADATA
 });

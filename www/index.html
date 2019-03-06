@@ -31,7 +31,8 @@
         -->
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>Hello World</title>
 </head>
@@ -42,8 +43,13 @@
         <div id="deviceready" class="blink">
             <p class="event listening">Connecting to Device</p>
             <p class="event received">Device is Ready</p>
-            <button id="download_btn" onclick="download('keroro3.jpg', 'http://2.bp.blogspot.com/-JQqmV4ZCVmI/Ti2XGg5L8mI/AAAAAAAAAAM/Yc7acR_qRWY/s1600/keroro3.jpg')">Download</button>
+            <button id="download_btn"
+                onclick="download('keroro3.jpg', 'http://2.bp.blogspot.com/-JQqmV4ZCVmI/Ti2XGg5L8mI/AAAAAAAAAAM/Yc7acR_qRWY/s1600/keroro3.jpg')">Download</button>
             <button id="statusbar_btn" onclick="onStatusBar()">onStatusBar</button>
+            <button id="statusbar_btn"
+                onclick="openLink('http://www.treehouseanimals.org/site/DocServer/catcareguide.pdf')">open
+                link1</button>
+            <button id="statusbar_btn" onclick="openLink('https://developer.android.com')">open link2</button>
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
@@ -86,14 +92,15 @@
                     window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, onFileSystemSuccess, onError);
                 }
                 else if (platform.toLowerCase() == "ios") {
-                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
+                    // window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
+                    window.requestFileSystem(cordova.file.documentsDirectory, 0, onFileSystemSuccess, onError);
                 }
             }
         }
 
         function onError(e) {
             console.log(">>>>> error", e)
-            navigator.notification.alert("Error : Downloading Failed");
+            // navigator.notification.alert("Error : Downloading Failed");
         };
 
         function onFileSystemSuccess(fileSystem) {
@@ -101,7 +108,8 @@
             if (device.platform.toLowerCase() == "android") {
                 entry = fileSystem;
             } else {
-                entry = fileSystem.root;
+                // entry = fileSystem.root;
+                entry = fileSystem
             }
             entry.getDirectory(currentFolder, {
                 create: true,
@@ -125,8 +133,15 @@
             fileTransfer.download(uri, cdr.nativeURL + filename,
                 function (entry) {
                     // Logic to open file using file opener plugin
+                    window.galleryRefresh.refresh(
+                        entry.toURL(),
+                        function (success) {
+                            console.log(success);
+                        },
+                        function (error) { console.log(error); }
+                    );
                     console.log(">>>>> sc", entry)
-                    onStatusBar("Download", `Download ${filename} complete.`, "Done")
+                    onStatusBar("Download", `Download ${filename} complete`, "Done")
                 },
                 onError,
                 false
@@ -144,13 +159,16 @@
 
         function onStatusBar(title, message, buttonName) {
             navigator.notification.alert(
-                message,  
-                ()=>{},         
-                title,          
-                buttonName                 
+                message,
+                () => { },
+                title,
+                buttonName
             );
         }
 
+        function openLink(url) {
+            var ref = window.open(url, '_system', 'location=yes');
+        }
     </script>
 </body>
 
