@@ -92,7 +92,8 @@
                     window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, onFileSystemSuccess, onError);
                 }
                 else if (platform.toLowerCase() == "ios") {
-                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
+                    openLink(url)
+                    //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
                     //window.requestFileSystem(cordova.file.documentsDirectory, 0, onFileSystemSuccess, onError);
                 }
             }
@@ -100,7 +101,7 @@
 
         function onError(e) {
             console.log(">>>>> error", e)
-            // navigator.notification.alert("Error : Downloading Failed");
+            navigator.notification.alert("Downloading Failed");
         };
 
         function onFileSystemSuccess(fileSystem) {
@@ -112,9 +113,10 @@
                     exclusive: false
                 }, onGetDirectorySuccess, onError);
             } else {
+                //openLink(url)
                 //entry = fileSystem.root;
-                entry = cordova.file.documentsDirectory
-                downloadForBrowser(entry+filename)
+                //entry = cordova.file.documentsDirectory
+                //downloadForIOS(entry + filename)
             }
 
         };
@@ -124,14 +126,14 @@
             dir.getFile(filename, {
                 create: true,
                 exclusive: false
-            }, gotFileEntry, onError);
+            }, downloadForAndroid, onError);
         };
 
-        function gotFileEntry(fileEntry) {
+        function downloadForAndroid(fileEntry) {
             // URL in which the pdf is available
             let fileTransfer = new FileTransfer();
             var documentUrl = url;
-            var uri = encodeURI(documentUrl);
+            var uri = documentUrl;
             fileTransfer.download(uri, cdr.nativeURL + filename,
                 function (entry) {
                     // Logic to open file using file opener plugin
@@ -154,25 +156,16 @@
             // URL in which the pdf is available
             let fileTransfer = new FileTransfer();
             var documentUrl = url;
-            var uri = encodeURI(documentUrl);
+            var uri = documentUrl;
             fileTransfer.download(uri, localUrl,
                 function (entry) {
-                    // Logic to open file using file opener plugin
-                    // window.galleryRefresh.refresh(
-                    //     entry.toURL(),
-                    //     function (success) {
-                    //         console.log(success);
-                    //     },
-                    //     function (error) { console.log(error); }
-                    // );
-                    console.log(">>>>> sc", entry)
+                    console.log(">>>>> sc", entry.toURL())
                     onStatusBar("Download", `Download ${filename} complete`, "Done")
                 },
                 onError,
                 false
             );
         };
-
 
         function downloadForBrowser(filename, url) {
             let link = document.createElement("a");
