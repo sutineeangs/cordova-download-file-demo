@@ -92,8 +92,8 @@
                     window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, onFileSystemSuccess, onError);
                 }
                 else if (platform.toLowerCase() == "ios") {
-                    // window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
-                    window.requestFileSystem(cordova.file.documentsDirectory, 0, onFileSystemSuccess, onError);
+                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, onError);
+                    //window.requestFileSystem(cordova.file.documentsDirectory, 0, onFileSystemSuccess, onError);
                 }
             }
         }
@@ -107,14 +107,16 @@
             var entry = "";
             if (device.platform.toLowerCase() == "android") {
                 entry = fileSystem;
+                entry.getDirectory(currentFolder, {
+                    create: true,
+                    exclusive: false
+                }, onGetDirectorySuccess, onError);
             } else {
-                // entry = fileSystem.root;
-                entry = fileSystem
+                //entry = fileSystem.root;
+                entry = cordova.file.documentsDirectory
+                downloadForBrowser(entry+filename)
             }
-            entry.getDirectory(currentFolder, {
-                create: true,
-                exclusive: false
-            }, onGetDirectorySuccess, onError);
+
         };
 
         function onGetDirectorySuccess(dir) {
@@ -147,6 +149,30 @@
                 false
             );
         };
+
+        function downloadForIOS(localUrl) {
+            // URL in which the pdf is available
+            let fileTransfer = new FileTransfer();
+            var documentUrl = url;
+            var uri = encodeURI(documentUrl);
+            fileTransfer.download(uri, localUrl,
+                function (entry) {
+                    // Logic to open file using file opener plugin
+                    // window.galleryRefresh.refresh(
+                    //     entry.toURL(),
+                    //     function (success) {
+                    //         console.log(success);
+                    //     },
+                    //     function (error) { console.log(error); }
+                    // );
+                    console.log(">>>>> sc", entry)
+                    onStatusBar("Download", `Download ${filename} complete`, "Done")
+                },
+                onError,
+                false
+            );
+        };
+
 
         function downloadForBrowser(filename, url) {
             let link = document.createElement("a");
